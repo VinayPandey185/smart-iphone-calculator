@@ -1,24 +1,31 @@
-iPhone Calculator – Premium (Flask + JS)
+📱 iPhone Calculator – Premium (Flask + JS)
+<p align="center"> <img src="https://img.shields.io/badge/Python-3.x-blue" /> 
+<img src="https://img.shields.io/badge/Flask-Framework-black" />
+ <img src="https://img.shields.io/badge/License-MIT-green" />
+ <img src="https://img.shields.io/github/stars/VinayPandey185/smart-iphone-calculator?style=social" /> 
+ <img src="https://img.shields.io/github/forks/VinayPandey185/smart-iphone-calculator?style=social" />
+ <img src="https://img.shields.io/github/last-commit/VinayPandey185/smart-iphone-calculator" /> </p>
 
 A beautiful iPhone-style calculator with scientific mode, sound, vibration, history, theme switching, and Flask backend APIs.
 
-Features
+⭐ Features
 
 📱 iPhone-style UI (rounded buttons, ripple animation)
 
-🌗 Light / Dark mode (auto-saved with LocalStorage)
+🌗 Light / Dark Mode with LocalStorage
 
 🔊 Click sound feedback
 
 📳 Vibration feedback
 
-🧮 Scientific mode (sin, cos, tan, log, ln, abs, cbr, factorial, power, random)
+🧮 Scientific mode:
+sin, cos, tan, log, ln, abs, cbr, factorial, power, random
 
-➕ Standard calculator (add / subtract / multiply / divide)
+➕ Standard calculator: + − × ÷
 
-🔗 Flask backend API for all operations
+🔗 Flask backend APIs
 
-📝 History panel with clear button
+📝 History panel with clear option
 
 
 📂 Project Structure
@@ -29,8 +36,11 @@ flaskProject/
 │── static/
 │    ├── style.css
 │    └── script.js
-└── README.md
+│── README.md
+│── LICENSE
+└── .gitignore
 
+⚙️ Installation
 git clone YOUR_REPO_URL
 cd flaskProject
 
@@ -63,9 +73,7 @@ Factorial	/fact/5
 Power	/pow/5/3
 Random (0–n)	/rand/50
 
-🛠 Technologies
-
-Technologies Used
+🛠 Technologies Used
 
 🐍 Python Flask
 
