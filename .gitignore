@@ -1,0 +1,128 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Flask sessions / cache
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Mac / Windows system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# Local config
+*.env
+
+# Compiled assets
+*.sass-cache
+*.cache/
+
+# Node (if used)
+node_modules/
+
+# Build
+dist/
+build/# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.py[cod]
+*$py.class
+
+# -------------------------
+# Virtual environments
+# -------------------------
+venv/
+env/
+ENV/
+.venv/
+
+# -------------------------
+# Flask / App data
+# -------------------------
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# -------------------------
+# IDE settings
+# -------------------------
+.vscode/
+.idea/
+
+# -------------------------
+# System files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
+
+# -------------------------
+# Local environment config
+# -------------------------
+*.env
+
+# -------------------------
+# Cache / Temp
+# -------------------------
+*.sass-cache
+*.cache/
+tmp/
+temp/
+
+# -------------------------
+# Node (optional)
+# -------------------------
+node_modules/
+
+# -------------------------
+# Build / Distribution
+# -------------------------
+dist/
+build/
+
+# -------------------------
+# Static mapping files
+# -------------------------
+/static/*.map
+
+
+# Flask static generated files
+/static/*.map
+
+# Temp
+tmp/
+temp/

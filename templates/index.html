@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>iPhone Calculator – Premium</title>
+
+    <!-- Link external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ======================= APP UI ======================= -->
+<div class="phone" id="phone">
+
+    <div class="display">
+        <div id="modeLabel">Standard</div>
+        <span id="displayValue">0</span>
+    </div>
+
+    <!-- Keypad -->
+    <div class="pad" id="pad">
+        <button class="btn func" data-action="clear">AC</button>
+        <button class="btn func" data-action="backspace">⌫</button>
+        <button class="btn func" data-action="plusminus">±</button>
+        <button class="btn op" data-action="percent">%</button>
+
+        <button class="btn num" data-num="7">7</button>
+        <button class="btn num" data-num="8">8</button>
+        <button class="btn num" data-num="9">9</button>
+        <button class="btn op" data-action="divide">÷</button>
+
+        <button class="btn num" data-num="4">4</button>
+        <button class="btn num" data-num="5">5</button>
+        <button class="btn num" data-num="6">6</button>
+        <button class="btn op" data-action="multiply">×</button>
+
+        <button class="btn num" data-num="1">1</button>
+        <button class="btn num" data-num="2">2</button>
+        <button class="btn num" data-num="3">3</button>
+        <button class="btn op" data-action="subtract">−</button>
+
+        <button class="btn num zero" data-num="0">0</button>
+        <button class="btn num" data-num=".">.</button>
+        <button class="btn op" data-action="equals">=</button>
+    </div>
+
+    <!-- Toggles -->
+    <div class="sci-toggle">
+        <div>
+            <span>Scientific</span>
+            <input type="checkbox" id="sciSwitch" />
+        </div>
+
+        <div>
+            <span id="themeLabel">Light</span>
+            <input type="checkbox" id="themeSwitch" />
+        </div>
+    </div>
+
+    <!-- Scientific -->
+    <div class="sci-panel" id="sciPanel">
+        <div class="sci-grid">
+            <button data-sci="sin">sin</button>
+            <button data-sci="cos">cos</button>
+            <button data-sci="tan">tan</button>
+            <button data-sci="log">log</button>
+            <button data-sci="ln">ln</button>
+            <button data-sci="abs">abs</button>
+            <button data-sci="cbr">cbr</button>
+            <button data-sci="fact">n!</button>
+
+            <button data-sci="pow">xʸ</button>
+            <input id="sciPowY" class="small-input" placeholder="enter y">
+
+            <button data-sci="rand">rand</button>
+            <input id="sciRandN" class="small-input" placeholder="enter n">
+        </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottom-bar">
+        <button id="copyBtn" class="bottom-btn">📋</button>
+        <button id="soundBtn" class="bottom-btn">🔊</button>
+        <button id="vibeBtn" class="bottom-btn">📳</button>
+        <button id="historyBtn" class="bottom-btn">📝</button>
+    </div>
+</div>
+
+<!-- History Panel -->
+<div class="history-panel" id="historyPanel">
+    <div class="history-header">
+        <span>History</span>
+        <button id="clearHistory">Clear</button>
+        <button id="closeHistory">✖</button>
+    </div>
+    <div id="historyList"></div>
+</div>
+
+<!-- External JS -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
