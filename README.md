@@ -88,4 +88,4 @@ Random (0–n)	/rand/50
 ✨ About
 
 Developer: Vinay Pandey
-Passionate about building modern UI experiences with Python + Flask.
+(Passionate about building modern UI experiences with Python + Flask.)
