@@ -1,6 +1,6 @@
-/* ---------------------------
+/* ===============================
    DOM SHORTCUTS
-----------------------------*/
+=============================== */
 const displayEl = document.getElementById("displayValue");
 const modeLabel = document.getElementById("modeLabel");
 const padEl = document.getElementById("pad");
@@ -19,43 +19,48 @@ const closeHistory = document.getElementById("closeHistory");
 const clearHistory = document.getElementById("clearHistory");
 const historyList = document.getElementById("historyList");
 
-/* ---------------------------
-   STATE
-----------------------------*/
+/* ===============================
+   CALCULATOR STATE
+=============================== */
 let display = "0";
 let stored = null;
 let pendingOp = null;
 let resetNext = false;
 
-/* ---------------------------
+/* ===============================
    SOUND SYSTEM
-----------------------------*/
+=============================== */
 let soundEnabled = JSON.parse(localStorage.getItem("soundEnabled") || "true");
 
+// Unlock audio on first click
+document.body.addEventListener("click", () => {
+    clickSound.play().catch(() => {});
+}, { once: true });
+
+// Real click sound
 const clickSound = new Audio(
-"data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA="
+  "https://assets.mixkit.co/sfx/download/mixkit-hard-typewriter-click-1040.wav"
 );
+clickSound.load();
 
 function playClick() {
     if (!soundEnabled) return;
     clickSound.currentTime = 0;
-    clickSound.play();
+    clickSound.play().catch(() => {});
 }
 
-/* ---------------------------
-   VIBRATION SYSTEM
-----------------------------*/
+/* ===============================
+   VIBRATION
+=============================== */
 let vibeEnabled = JSON.parse(localStorage.getItem("vibeEnabled") || "true");
 
-function vibe(ms = 60) {
-    if (!vibeEnabled) return;
-    if (!("vibrate" in navigator)) return;
-    navigator.vibrate(ms);
+function vibe(ms = 50) {
+    if (vibeEnabled && "vibrate" in navigator) navigator.vibrate(ms);
 }
 
-/* ---------------------------
-   THEME SYSTEM
-----------------------------*/
+/* ===============================
+   THEME HANDLER
+=============================== */
 let lightMode = JSON.parse(localStorage.getItem("lightMode") || "false");
 
 function applyTheme() {
@@ -77,15 +82,16 @@ themeSwitch.addEventListener("change", () => {
     applyTheme();
 });
 
-/* ---------------------------
-   DISPLAY
-----------------------------*/
+/* ===============================
+   DISPLAY UPDATES
+=============================== */
 function refresh() {
     displayEl.textContent = display;
 }
 
 function pressNum(n) {
     playClick();
+    vibe();
 
     if (resetNext) {
         display = (n === ".") ? "0." : n;
@@ -98,22 +104,23 @@ function pressNum(n) {
     refresh();
 }
 
-/* ---------------------------
+/* ===============================
    COPY RESULT
-----------------------------*/
+=============================== */
 copyBtn.addEventListener("click", () => {
     navigator.clipboard.writeText(display);
     playClick();
     vibe(40);
     copyBtn.textContent = "✔";
-    setTimeout(() => copyBtn.textContent = "📋", 700);
+    setTimeout(() => (copyBtn.textContent = "📋"), 600);
 });
 
-/* ---------------------------
-   CLEAR / BACKSPACE / ± / %
-----------------------------*/
+/* ===============================
+   BASIC BUTTON ACTIONS
+=============================== */
 function clearAll() {
     playClick();
+    vibe();
     display = "0";
     stored = null;
     pendingOp = null;
@@ -123,28 +130,31 @@ function clearAll() {
 
 function plusMinus() {
     playClick();
-    display = display.startsWith("-") ? display.slice(1) : "-" + display;
+    vibe();
+    display = display.startsWith("-") ? display.substring(1) : "-" + display;
     refresh();
 }
 
 function backspace() {
     playClick();
+    vibe();
     display = display.length > 1 ? display.slice(0, -1) : "0";
     refresh();
 }
 
 function percent() {
     playClick();
+    vibe();
     display = String(parseFloat(display) / 100);
     refresh();
 }
 
-/* ---------------------------
-   OPERATORS (Backed by FLASK)
-----------------------------*/
+/* ===============================
+   OPERATOR HANDLER
+=============================== */
 function operatorPressed(op) {
     playClick();
-    vibe(25);
+    vibe();
 
     if (pendingOp && !resetNext) doEquals();
 
@@ -161,6 +171,9 @@ const endpoint = {
     divide: "/div/"
 };
 
+/* ===============================
+   EQUALS (Fetch Flask API)
+=============================== */
 async function doEquals() {
     if (!pendingOp) return;
 
@@ -185,20 +198,18 @@ async function doEquals() {
     refresh();
 }
 
-/* ---------------------------
-   KEYPAD BUTTONS
-----------------------------*/
+/* ===============================
+   KEYPAD PRESSES
+=============================== */
 padEl.addEventListener("click", (e) => {
     const btn = e.target.closest("button");
     if (!btn) return;
-
-    vibe(20);
 
     if (btn.dataset.num !== undefined) {
         return pressNum(btn.dataset.num);
     }
 
-    let act = btn.dataset.action;
+    const act = btn.dataset.action;
     if (!act) return;
 
     if (act === "clear") return clearAll();
@@ -210,10 +221,11 @@ padEl.addEventListener("click", (e) => {
     return operatorPressed(act);
 });
 
-/* ---------------------------
+/* ===============================
    SCIENTIFIC FUNCTIONS
-----------------------------*/
+=============================== */
 sciSwitch.addEventListener("change", () => {
+    playClick();
     sciPanel.classList.toggle("show", sciSwitch.checked);
 });
 
@@ -227,15 +239,18 @@ document.querySelectorAll(".sci-grid button").forEach((btn) => {
 
         let fn = btn.dataset.sci;
         let x = display;
+
         let url = "";
 
         if (fn === "pow") {
             let y = document.getElementById("sciPowY").value || 2;
             url = `/pow/${x}/${y}`;
-        } else if (fn === "rand") {
+        } 
+        else if (fn === "rand") {
             let n = document.getElementById("sciRandN").value || 10;
             url = `/rand/${n}`;
-        } else {
+        } 
+        else {
             url = `/${fn}/${x}`;
         }
 
@@ -258,12 +273,12 @@ document.querySelectorAll(".sci-grid button").forEach((btn) => {
     });
 });
 
-/* ---------------------------
+/* ===============================
    HISTORY PANEL
-----------------------------*/
-function addHistory(line) {
+=============================== */
+function addHistory(text) {
     let item = document.createElement("div");
-    item.textContent = line;
+    item.textContent = text;
     historyList.appendChild(item);
 }
 
@@ -282,19 +297,19 @@ clearHistory.addEventListener("click", () => {
     historyList.innerHTML = "";
 });
 
-/* ---------------------------
+/* ===============================
    KEYBOARD SUPPORT
-----------------------------*/
+=============================== */
 document.addEventListener("keydown", (e) => {
     if (/[0-9]/.test(e.key)) pressNum(e.key);
     if (e.key === ".") pressNum(".");
     if (e.key === "Enter") doEquals();
-    if (e.key === "Backspace") backspace();
+
     if (e.key === "+") operatorPressed("add");
     if (e.key === "-") operatorPressed("subtract");
     if (e.key === "*") operatorPressed("multiply");
     if (e.key === "/") operatorPressed("divide");
 });
 
-/* Initial load */
+/* INITIAL REFRESH */
 refresh();
